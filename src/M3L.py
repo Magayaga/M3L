@@ -49,7 +49,7 @@ class M3L:
 
     @staticmethod
     def sqrt(x):
-        return x ** 0.5
+        return x ** (1/2)
 
     @staticmethod
     def cbrt(x):
