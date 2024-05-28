@@ -1,5 +1,7 @@
+#
 # M3L - Magayaga Mathematical Library (v0.9.0 / May 28, 2024)
 # Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
+#
 
 class M3L
     PI = 3.141592653589793
