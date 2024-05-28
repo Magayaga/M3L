@@ -1,3 +1,8 @@
+#
+# M3L - Magayaga Mathematical Library (v0.9.0 / May 28, 2024)
+# Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
+#
+
 import random
 
 class M3L:
@@ -156,10 +161,20 @@ class M3L:
         return identity
 
     @staticmethod
-    def dot(vec1, vec2):
-        if len(vec1) != len(vec2):
-            raise ValueError("Vectors must have the same length")
-        return sum(x * y for x, y in zip(vec1, vec2))
+    def dot(a, b):
+        if isinstance(a[0], (list, tuple)) and isinstance(b[0], (list, tuple)):
+            return [[sum(x * y for x, y in zip(row, col)) for col in zip(*b)] for row in a]
+        else:
+            return sum(x * y for x, y in zip(a, b))
+    
+    @staticmethod
+    def vdot(a, b):
+        if isinstance(a[0], (list, tuple)) and isinstance(b[0], (list, tuple)):
+            a_flat = [elem for sublist in a for elem in sublist]
+            b_flat = [elem for sublist in b for elem in sublist]
+            return sum(x * y for x, y in zip(a_flat, b_flat))
+        else:
+            return sum(x * y for x, y in zip(a, b))
 
     @staticmethod
     def multi_dot(matrices):
@@ -211,6 +226,48 @@ class M3L:
             return result
         else:
             raise ValueError("Matrix power is only defined for non-negative integers")
+    
+    @staticmethod
+    def arange(start, stop=None, step=1):
+        if stop is None:
+            start, stop = 0, start
+        return [i for i in range(start, stop, step)]
+
+    @staticmethod
+    def reshape(matrix, new_shape):
+        flat = [item for sublist in matrix for item in sublist]
+        reshaped = []
+        count = 0
+        for i in range(new_shape[0]):
+            row = []
+            for j in range(new_shape[1]):
+                row.append(flat[count])
+                count += 1
+            reshaped.append(row)
+        return reshaped
+
+    @staticmethod
+    def zeros(shape):
+        if isinstance(shape, int):
+            return [0] * shape
+        elif isinstance(shape, tuple):
+            if len(shape) == 1:
+                return [0] * shape[0]
+            elif len(shape) == 2:
+                return [[0] * shape[1] for _ in range(shape[0])]
+            else:
+                raise ValueError("Invalid shape for zeros")
+        else:
+            raise ValueError("Invalid shape for zeros")
+
+    @staticmethod
+    def tensordot(a, b, axes=2):
+        if isinstance(a[0], list) and isinstance(b[0], list):
+            a_flat = [elem for sublist in a for elem in sublist]
+            b_flat = [elem for sublist in b for elem in sublist]
+            return sum(x * y for x, y in zip(a_flat, b_flat))
+        else:
+            return sum(x * y for x, y in zip(a, b))
 
     @staticmethod
     def kronecker(matrix1, matrix2):
