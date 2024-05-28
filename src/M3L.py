@@ -10,6 +10,18 @@ class M3L:
     E = 2.718281828459045
 
     @staticmethod
+    def positive(x):
+        if x < 0:
+            raise ValueError("Value must be positive")
+        return x
+
+    @staticmethod
+    def negative(x):
+        if x > 0:
+            raise ValueError("Value must be negative")
+        return x
+    
+    @staticmethod
     def add(*args):
         result = 0
         for num in args:
@@ -115,6 +127,24 @@ class M3L:
         if x <= 0:
             raise ValueError("Invalid input for natural logarithm")
         return M3L.integrate(lambda t: 1 / t, 1, x)
+    
+    @staticmethod
+    def summation(start, end, term):
+        if start > end:
+            raise ValueError("Start index must be less than or equal to the end index")
+        result = 0
+        for i in range(start, end + 1):
+            result += term(i)
+        return result
+    
+    @staticmethod
+    def product(start, end, term):
+        if start > end:
+            raise ValueError("Start index must be less than or equal to the end index")
+        result = 1
+        for i in range(start, end + 1):
+            result *= term(i)
+        return result
 
     @staticmethod
     def integrate(f, a, b, N=1000):
@@ -123,6 +153,23 @@ class M3L:
         for i in range(N):
             integral += f(a + (i + 0.5) * dx) * dx
         return integral
+    
+    # Example code:
+    #
+    # You can be f(x), f(x) = M3L.sin(x).
+    #
+    # result = M3L.limit(f, math.pi/2, approach='from_right')
+    # print(result)
+
+    @staticmethod
+    def limit(func, x, approach="right", epsilon=1e-6):
+        if approach not in ("right", "left"):
+            raise ValueError("Approach must be 'right' or 'left'")
+        if approach == "right":
+            x_approach = x + epsilon
+        else:
+            x_approach = x - epsilon
+        return func(x_approach)
 
     @staticmethod
     def array(matrix):
@@ -294,4 +341,57 @@ class M3L:
                     sum_prod = sum(L[i][k] * L[j][k] for k in range(j))
                     L[i][j] = (matrix[i][j] - sum_prod) / L[j][j]
         return L
-      
+    
+    @staticmethod
+    def bdn(binary):
+        decimal = 0
+        binary_str = str(binary)
+        for i in range(len(binary_str)):
+            bit = int(binary_str[i])
+            if bit != 0 and bit != 1:
+                raise ValueError("Invalid binary number")
+            decimal += bit * (2 ** (len(binary_str) - i - 1))
+        return decimal
+    
+    @staticmethod
+    def dbn(decimal):
+        if decimal < 0:
+            raise ValueError("Decimal number must be non-negative")
+        binary = ""
+        if decimal == 0:
+            return "0"
+        while decimal > 0:
+            binary = str(decimal % 2) + binary
+            decimal //= 2
+        return binary
+    
+    @staticmethod
+    def prime_factorization(number):
+        factors = []
+        divisor = 2
+        while number > 1:
+            if number % divisor == 0:
+                factors.append(divisor)
+                number //= divisor
+            else:
+                divisor += 1
+        return " * ".join(str(factor) for factor in factors)
+    
+    @staticmethod
+    def gamma(z):
+        sqrt_two_pi = M3L.sqrt(M3L.PI * 2)
+        return sqrt_two_pi * ((z - 1/2) ** (z - 1/2)) / (M3L.E ** z)
+    
+    @staticmethod
+    def zeta(s):
+        result = 0
+        n = 1
+        while True:
+            term = 1 / (n ** s)
+            if term < 1e-6:  # Adjust this threshold for desired precision
+                break
+            result += term
+            n += 1
+        return result
+
+    
