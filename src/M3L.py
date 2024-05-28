@@ -11,15 +11,11 @@ class M3L:
 
     @staticmethod
     def positive(x):
-        if x < 0:
-            raise ValueError("Value must be positive")
         return x
 
     @staticmethod
     def negative(x):
-        if x > 0:
-            raise ValueError("Value must be negative")
-        return x
+        return -x
     
     @staticmethod
     def add(*args):
@@ -393,5 +389,3 @@ class M3L:
             result += term
             n += 1
         return result
-
-    
