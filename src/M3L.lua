@@ -145,23 +145,23 @@ function M3L.ln(x)
     return M3L.integrate(function(t) return 1 / t end, 1, x)
 end
 
-function M3L.summation(start, end, term)
-    if start > end then
+function M3L.summation(start, finish, term)
+    if start > finish then
         error("Start index must be less than or equal to the end index")
     end
     local result = 0
-    for i = start, end do
+    for i = start, finish do
         result = result + term(i)
     end
     return result
 end
 
-function M3L.product(start, end, term)
-    if start > end then
+function M3L.product(start, finish, term)
+    if start > finish then
         error("Start index must be less than or equal to the end index")
     end
     local result = 1
-    for i = start, end do
+    for i = start, finish do
         result = result * term(i)
     end
     return result
@@ -317,12 +317,28 @@ end
 
 function M3L.random(size)
     if type(size) == "number" then
-        return {math.random() for _ = 1, size}
+        local result = {}
+        for _ = 1, size do
+            table.insert(result, math.random())
+        end
+        return result
     elseif type(size) == "table" then
         if #size == 1 then
-            return {math.random() for _ = 1, size[1]}
+            local result = {}
+            for _ = 1, size[1] do
+                table.insert(result, math.random())
+            end
+            return result
         elseif #size == 2 then
-            return {{math.random() for _ = 1, size[2]} for _ = 1, size[1]}
+            local result = {}
+            for _ = 1, size[1] do
+                local row = {}
+                for _ = 1, size[2] do
+                    table.insert(row, math.random())
+                end
+                table.insert(result, row)
+            end
+            return result
         else
             error("Invalid size for random")
         end
@@ -330,6 +346,7 @@ function M3L.random(size)
         error("Invalid size for random")
     end
 end
+
 
 function M3L.solve(matrix, b)
     local inv_matrix = M3L.inv(matrix)
@@ -414,12 +431,24 @@ end
 
 function M3L.zeros(shape)
     if type(shape) == "number" then
-        return {0 for _ = 1, shape}
+        return {0}
     elseif type(shape) == "table" then
         if #shape == 1 then
-            return {0 for _ = 1, shape[1]}
+            local result = {}
+            for _ = 1, shape[1] do
+                table.insert(result, 0)
+            end
+            return result
         elseif #shape == 2 then
-            return {{0 for _ = 1, shape[2]} for _ = 1, shape[1]}
+            local result = {}
+            for _ = 1, shape[1] do
+                local row = {}
+                for _ = 1, shape[2] do
+                    table.insert(row, 0)
+                end
+                table.insert(result, row)
+            end
+            return result
         else
             error("Invalid shape for zeros")
         end
