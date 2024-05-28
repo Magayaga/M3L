@@ -154,7 +154,7 @@ class M3L:
     #
     # You can be f(x), f(x) = M3L.sin(x).
     #
-    # result = M3L.limit(f, math.pi/2, approach='from_right')
+    # result = M3L.limit(f, math.pi/2, approach='right')
     # print(result)
 
     @staticmethod
