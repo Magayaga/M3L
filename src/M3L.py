@@ -338,29 +338,30 @@ class M3L:
                     L[i][j] = (matrix[i][j] - sum_prod) / L[j][j]
         return L
     
-    @staticmethod
-    def bdn(binary):
-        decimal = 0
-        binary_str = str(binary)
-        for i in range(len(binary_str)):
-            bit = int(binary_str[i])
-            if bit != 0 and bit != 1:
-                raise ValueError("Invalid binary number")
-            decimal += bit * (2 ** (len(binary_str) - i - 1))
-        return decimal
-    
-    @staticmethod
-    def dbn(decimal):
-        if decimal < 0:
-            raise ValueError("Decimal number must be non-negative")
-        binary = ""
-        if decimal == 0:
-            return "0"
-        while decimal > 0:
-            binary = str(decimal % 2) + binary
-            decimal //= 2
-        return binary
-    
+    class binary:
+        @staticmethod
+        def bdn(binary):
+            decimal = 0
+            binary_str = str(binary)
+            for i in range(len(binary_str)):
+                bit = int(binary_str[i])
+                if bit != 0 and bit != 1:
+                    raise ValueError("Invalid binary number")
+                decimal += bit * (2 ** (len(binary_str) - i - 1))
+            return decimal
+        
+        @staticmethod
+        def dbn(decimal):
+            if decimal < 0:
+                raise ValueError("Decimal number must be non-negative")
+            binary = ""
+            if decimal == 0:
+                return "0"
+            while decimal > 0:
+                binary = str(decimal % 2) + binary
+                decimal //= 2
+            return binary
+        
     @staticmethod
     def prime_factorization(number):
         factors = []
@@ -373,19 +374,20 @@ class M3L:
                 divisor += 1
         return " * ".join(str(factor) for factor in factors)
     
-    @staticmethod
-    def gamma(z):
-        sqrt_two_pi = M3L.sqrt(M3L.PI * 2)
-        return sqrt_two_pi * ((z - 1/2) ** (z - 1/2)) / (M3L.E ** z)
-    
-    @staticmethod
-    def zeta(s):
-        result = 0
-        n = 1
-        while True:
-            term = 1 / (n ** s)
-            if term < 1e-6:  # Adjust this threshold for desired precision
-                break
-            result += term
-            n += 1
-        return result
+    class function:
+        @staticmethod
+        def gamma(z):
+            sqrt_two_pi = M3L.sqrt(M3L.PI * 2)
+            return sqrt_two_pi * ((z - 1/2) ** (z - 1/2)) / (M3L.E ** z)
+        
+        @staticmethod 
+        def zeta(s):
+            result = 0
+            n = 1
+            while True:
+                term = 1 / (n ** s)
+                if term < 1e-6:  # Adjust this threshold for desired precision
+                    break
+                result += term
+                n += 1
+                return result
