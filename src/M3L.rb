@@ -1,5 +1,5 @@
 #
-# M3L - Magayaga Mathematical Library (v0.9.0 / May 28, 2024)
+# M3L - Magayaga Mathematical Library (v0.9.1 / May 16, 2024)
 # Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
 #
 
@@ -66,6 +66,48 @@ class M3L
         x ** (1/3)
     end
 
+    class Trim
+        def self.sin(x)
+            # Taylor series approximation for sin(x)
+            result = 0
+            10.times do |i|
+                coef = (-1) ** i
+                num = x ** (2 * i + 1)
+                denom = M3L.factorial(2 * i + 1)
+                result += coef * (num / denom)
+            end
+            result
+        end
+      
+        def self.cos(x)
+            # Taylor series approximation for cos(x)
+            result = 0
+            10.times do |i|
+                coef = (-1) ** i
+                num = x ** (2 * i)
+                denom = self.factorial(2 * i)
+                result += coef * (num / denom)
+            end
+            result
+        end
+      
+        def self.tan(x)
+            sin(x) / cos(x)
+        end
+      
+        def self.csc(x)
+            1 / sin(x)
+        end
+      
+        def self.sec(x)
+            1 / cos(x)
+        end
+      
+        def self.cot(x)
+            1 / tan(x)
+        end
+    end      
+
     def self.factorial(n)
         if n == 0
             1
@@ -97,22 +139,24 @@ class M3L
         integral
     end
 
-    def self.summation(start, finish, term)
-        raise ArgumentError, "Start index must be less than or equal to the end index" if start > finish
-        result = 0
-        (start..finish).each do |i|
-            result += term.call(i)
+    class Calc
+        def self.summation(start, finish, term)
+            raise ArgumentError, "Start index must be less than or equal to the end index" if start > finish
+            result = 0
+            (start..finish).each do |i|
+                result += term.call(i)
+            end
+            result
         end
-        result
-    end
-    
-    def self.product(start, finish, term)
-        raise ArgumentError, "Start index must be less than or equal to the end index" if start > finish
-        result = 1
-        (start..finish).each do |i|
-            result *= term.call(i)
+        
+        def self.product(start, finish, term)
+            raise ArgumentError, "Start index must be less than or equal to the end index" if start > finish
+            result = 1
+            (start..finish).each do |i|
+                result *= term.call(i)
+            end
+            result
         end
-        result
     end
 
     def self.limit(func, x, approach="right", epsilon=1e-6)
@@ -293,21 +337,23 @@ class M3L
         l
     end
 
-    def self.bdn(binary)
-        binary.to_s.chars.reverse.each_with_index.map { |bit, i| bit.to_i * (2 ** i) }.sum
-    end
-
-    def self.dbn(decimal)
-        return "0" if decimal.zero?
-    
-        binary = ""
-        while decimal > 0
-            binary.prepend((decimal % 2).to_s)
-            decimal /= 2
+    class Binary
+        def self.bdn(binary)
+            binary.to_s.chars.reverse.each_with_index.map { |bit, i| bit.to_i * (2 ** i) }.sum
         end
-        binary
+    
+        def self.dbn(decimal)
+            return "0" if decimal.zero?
+        
+            binary = ""
+            while decimal > 0
+                binary.prepend((decimal % 2).to_s)
+                decimal /= 2
+            end
+            binary
+        end
     end
-
+    
     def self.prime_factorization(number)
         factors = []
         divisor = 2
@@ -322,21 +368,23 @@ class M3L
         factors.join(" * ")
     end
 
-    def self.gamma(z)
-        sqrt_two_pi = self.sqrt(self::PI * 2)
-        sqrt_two_pi * ((z - 1/2) ** (z - 1/2)) / (self::E ** z)
-    end
-
-    def self.zeta(s)
-        result = 0
-        n = 1
-        loop do
-            term = 1 / (n ** s)
-            break if term < 1e-6
-            result += term
-            n += 1
+    class Function
+        def self.gamma(z)
+            sqrt_two_pi = self.sqrt(M2L::PI * 2)
+            sqrt_two_pi * ((z - 1/2) ** (z - 1/2)) / (self::E ** z)
         end
-        result
+    
+        def self.zeta(s)
+            result = 0
+            n = 1
+            loop do
+                term = 1 / (n ** s)
+                break if term < 1e-6
+                result += term
+                n += 1
+            end
+            result
+        end
     end
 
 end
