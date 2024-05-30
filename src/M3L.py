@@ -1,5 +1,5 @@
 #
-# M3L - Magayaga Mathematical Library (v0.9.0 / May 28, 2024)
+# M3L - Magayaga Mathematical Library (v0.9.1 / June 16, 2024)
 # Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
 #
 
@@ -62,44 +62,45 @@ class M3L:
     @staticmethod
     def cbrt(x):
         return x ** (1/3)
-
-    @staticmethod
-    def sin(x):
-        # Taylor series approximation for sin(x)
-        result = 0
-        for i in range(10):
-            coef = (-1) ** i
-            num = x ** (2 * i + 1)
-            denom = M3L.factorial(2 * i + 1)
-            result += coef * (num / denom)
-        return result
-
-    @staticmethod
-    def cos(x):
-        # Taylor series approximation for cos(x)
-        result = 0
-        for i in range(10):
-            coef = (-1) ** i
-            num = x ** (2 * i)
-            denom = M3L.factorial(2 * i)
-            result += coef * (num / denom)
-        return result
-
-    @staticmethod
-    def tan(x):
-        return M3L.sin(x) / M3L.cos(x)
-
-    @staticmethod
-    def csc(x):
-        return 1 / M3L.sin(x)
-
-    @staticmethod
-    def sec(x):
-        return 1 / M3L.cos(x)
-
-    @staticmethod
-    def cot(x):
-        return 1 / M3L.tan(x)
+    
+    class trim:
+        @staticmethod
+        def sin(x):
+            # Taylor series approximation for sin(x)
+            result = 0
+            for i in range(10):
+                coef = (-1) ** i
+                num = x ** (2 * i + 1)
+                denom = M3L.factorial(2 * i + 1)
+                result += coef * (num / denom)
+            return result
+    
+        @staticmethod
+        def cos(x):
+            # Taylor series approximation for cos(x)
+            result = 0
+            for i in range(10):
+                coef = (-1) ** i
+                num = x ** (2 * i)
+                denom = M3L.factorial(2 * i)
+                result += coef * (num / denom)
+            return result
+    
+        @staticmethod
+        def tan(x):
+            return M3L.sin(x) / M3L.cos(x)
+    
+        @staticmethod
+        def csc(x):
+            return 1 / M3L.sin(x)
+    
+        @staticmethod
+        def sec(x):
+            return 1 / M3L.cos(x)
+    
+        @staticmethod
+        def cot(x):
+            return 1 / M3L.tan(x)
 
     @staticmethod
     def factorial(n):
@@ -124,24 +125,25 @@ class M3L:
             raise ValueError("Invalid input for natural logarithm")
         return M3L.integrate(lambda t: 1 / t, 1, x)
     
-    @staticmethod
-    def summation(start, end, term):
-        if start > end:
-            raise ValueError("Start index must be less than or equal to the end index")
-        result = 0
-        for i in range(start, end + 1):
-            result += term(i)
-        return result
-    
-    @staticmethod
-    def product(start, end, term):
-        if start > end:
-            raise ValueError("Start index must be less than or equal to the end index")
-        result = 1
-        for i in range(start, end + 1):
-            result *= term(i)
-        return result
-
+    class calc:
+        @staticmethod
+        def summation(start, end, term):
+            if start > end:
+                raise ValueError("Start index must be less than or equal to the end index")
+            result = 0
+            for i in range(start, end + 1):
+                result += term(i)
+            return result
+        
+        @staticmethod
+        def product(start, end, term):
+            if start > end:
+                raise ValueError("Start index must be less than or equal to the end index")
+            result = 1
+            for i in range(start, end + 1):
+                result *= term(i)
+            return result
+        
     @staticmethod
     def integrate(f, a, b, N=1000):
         dx = (b - a) / N
