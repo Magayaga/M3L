@@ -1,10 +1,22 @@
 --
--- M3L - Magayaga Mathematical Library (v0.9.0 / May 28, 2024)
+-- M3L - Magayaga Mathematical Library (v0.9.1 / June 16, 2024)
 -- Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
 --
 
 -- Define the M3L class
 M3L = {}
+
+-- M3L Trigonometry
+M3L.Trim = {}
+
+-- M3L Calculus
+M3L.Calc = {}
+
+-- M3L Binary
+M3L.Binary = {}
+
+-- M3L Math Function
+M3L.Function = {}
 
 -- Define class variables
 M3L.PI = 3.141592653589793
@@ -79,7 +91,7 @@ function M3L.cbrt(x)
     return x ^ (1/3)
 end
 
-function M3L.sin(x)
+function M3L.Trim.sin(x)
     -- Taylor series approximation for sin(x)
     local result = 0
     for i = 0, 9 do
@@ -91,7 +103,7 @@ function M3L.sin(x)
     return result
 end
 
-function M3L.cos(x)
+function M3L.Trim.cos(x)
     -- Taylor series approximation for cos(x)
     local result = 0
     for i = 0, 9 do
@@ -103,19 +115,19 @@ function M3L.cos(x)
     return result
 end
 
-function M3L.tan(x)
+function M3L.Trim.tan(x)
     return M3L.sin(x) / M3L.cos(x)
 end
 
-function M3L.csc(x)
+function M3L.Trim.csc(x)
     return 1 / M3L.sin(x)
 end
 
-function M3L.sec(x)
+function M3L.Trim.sec(x)
     return 1 / M3L.cos(x)
 end
 
-function M3L.cot(x)
+function M3L.Trim.cot(x)
     return 1 / M3L.tan(x)
 end
 
@@ -145,7 +157,7 @@ function M3L.ln(x)
     return M3L.integrate(function(t) return 1 / t end, 1, x)
 end
 
-function M3L.summation(start, finish, term)
+function M3L.Calc.summation(start, finish, term)
     if start > finish then
         error("Start index must be less than or equal to the end index")
     end
@@ -156,7 +168,7 @@ function M3L.summation(start, finish, term)
     return result
 end
 
-function M3L.product(start, finish, term)
+function M3L.Calc.product(start, finish, term)
     if start > finish then
         error("Start index must be less than or equal to the end index")
     end
@@ -530,7 +542,7 @@ function M3L.cholesky(matrix)
     return L
 end
 
-function M3L.bdn(binary)
+function M3L.Binary.bdn(binary)
     local binary_str = tostring(binary)
     local decimal = 0
     for i = 1, #binary_str do
@@ -543,7 +555,7 @@ function M3L.bdn(binary)
     return decimal
 end
 
-function M3L.dbn(decimal)
+function M3L.Binary.dbn(decimal)
     if decimal < 0 then
         error("Decimal number must be non-negative")
     end
@@ -572,12 +584,12 @@ function M3L.prime_factorization(number)
     return table.concat(factors, " * ")
 end
 
-function M3L.gamma(z)
+function M3L.Function.gamma(z)
     local sqrt_two_pi = math.sqrt(M3L.PI * 2)
     return sqrt_two_pi * ((z - 1/2) ^ (z - 1/2)) / (M3L.E ^ z)
 end
 
-function M3L.zeta(s)
+function M3L.Function.zeta(s)
     local result = 0
     local n = 1
     while true do
