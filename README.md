@@ -6,4 +6,4 @@
 You can download the [Python](https://python.org), [Ruby](https://ruby-lang.org), and [Lua](https://lua.org) programming languages.
 
 ## Copyright
-Copyright (c) 2024 Cyril John Magayaga
+Copyright (c) 2024 Cyril John Magayaga. All rights reserved. Licensed under the [MIT](LICENSE) license.
