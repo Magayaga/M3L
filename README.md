@@ -3,7 +3,7 @@
 
 ## Getting Start
 
-You can download the [Python](https://python.org), [Ruby](https://ruby-lang.org), and [Lua](https://lua.org) programming languages.
+You can download the [Python](https://python.org), [Ruby](https://ruby-lang.org), and [Lua](https://lua.org) programming languages. It was available for the **cross-platform operating systems**.
 
 ## Copyright
 Copyright (c) 2024 Cyril John Magayaga. All rights reserved. Licensed under the [MIT](LICENSE) license.
