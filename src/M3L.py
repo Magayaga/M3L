@@ -101,6 +101,25 @@ class M3L:
         @staticmethod
         def cot(x):
             return 1 / M3L.tan(x)
+        
+        @staticmethod
+        def arcsin(x, terms=10):
+            if x < -1 or x > 1:
+                raise ValueError("Input should be in the range [-1, 1]")
+            result = x
+            term = x
+            x_squared = x * x
+            for n in range(1, terms):
+                term *= x_squared * (2 * n - 1) / (2 * n)
+                result += term / (2 * n + 1)
+            return result
+
+        @staticmethod
+        def arccos(x):
+            if x < -1 or x > 1:
+                raise ValueError("Input should be in the range [-1, 1]")
+            # Abramowitz and Stegun approximation for arccos(x)
+            return M3L.PI / 2 - M3L.trim.arcsin(x)
 
     @staticmethod
     def factorial(n):
