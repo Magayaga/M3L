@@ -1,5 +1,5 @@
 #
-# M3L - Magayaga Mathematical Library (v0.9.1 / May 16, 2024)
+# M3L - Magayaga Mathematical Library (v0.9.1 / June 16, 2024)
 # Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
 #
 
@@ -105,6 +105,40 @@ class M3L
       
         def self.cot(x)
             1 / tan(x)
+        end
+
+        def self.arcsin(x, terms = 10)
+            raise ValueError, "Input should be in the range [-1, 1]" if x < -1 || x > 1
+            
+            result = x
+            term = x
+            x_squared = x * x
+            (1...terms).each do |n|
+              term *= x_squared * (2 * n - 1) / (2 * n).to_f
+              result += term / (2 * n + 1).to_f
+            end
+            result
+        end
+
+        def self.arccos(x)
+            raise ValueError, "Input should be in the range [-1, 1]" if x < -1 || x > 1
+            
+            # Abramowitz and Stegun approximation for arccos(x)
+            M3L::PI / 2 - arcsin(x)
+        end
+
+        def self.arctan(z, terms = 10000)
+            return 0 if z.zero?
+        
+            step = z.to_f / terms
+            total_area = 0
+            (0...terms).each do |i|
+                t1 = i * step
+                t2 = (i + 1) * step
+                area = (1 / (1 + t1**2) + 1 / (1 + t2**2)) * step / 2.0
+                total_area += area
+            end
+            total_area
         end
     end      
 

@@ -131,6 +131,45 @@ function M3L.Trim.cot(x)
     return 1 / M3L.tan(x)
 end
 
+function M3L.Trim.arcsin(x, terms)
+    terms = terms or 10
+    if x < -1 or x > 1 then
+        error("Input should be in the range [-1, 1]", 2)
+    end
+    result = x
+    term = x
+    x_squared = x * x
+    for n = 1, terms - 1 do
+        term = term * x_squared * (2 * n - 1) / (2 * n)
+        result = result + term / (2 * n + 1)
+    end
+    return result
+end
+
+function M3L.Trim.arccos(x)
+    if x < -1 or x > 1 then
+        error("Input should be in the range [-1, 1]", 2)
+    end
+    -- Abramowitz and Stegun approximation for arccos(x)
+    return M3L.PI / 2 - M3L.Trim.arcsin(x)
+end
+
+function M3L.Trim.arctan(z, terms)
+    terms = terms or 10000
+    if z == 0 then
+        return 0
+    end
+    step = z / terms
+    total_area = 0
+    for i = 0, terms - 1 do
+        t1 = i * step
+        t2 = (i + 1) * step
+        area = (1 / (1 + t1^2) + 1 / (1 + t2^2)) * step / 2
+        total_area = total_area + area
+    end
+    return total_area
+end
+
 function M3L.factorial(n)
     if n == 0 then
         return 1

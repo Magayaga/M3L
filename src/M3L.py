@@ -120,6 +120,19 @@ class M3L:
                 raise ValueError("Input should be in the range [-1, 1]")
             # Abramowitz and Stegun approximation for arccos(x)
             return M3L.PI / 2 - M3L.trim.arcsin(x)
+        
+        @staticmethod
+        def arctan(z, terms=10000):
+            if z == 0:
+                return 0
+            step = z / terms
+            total_area = 0
+            for i in range(terms):
+                t1 = i * step
+                t2 = (i + 1) * step
+                area = (1 / (1 + t1**2) + 1 / (1 + t2**2)) * step / 2
+                total_area += area
+            return total_area
 
     @staticmethod
     def factorial(n):
@@ -412,3 +425,5 @@ class M3L:
                 result += term
                 n += 1
                 return result
+
+print(M3L.trim.arctan(1))
