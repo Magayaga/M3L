@@ -1,6 +1,6 @@
 --
 -- M3L - Magayaga Mathematical Library (v0.9.2 / July 23, 2024)
--- Copyright (c) 2024 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
+-- Copyright (c) 2024-2025 Cyril John Magayaga (cjmagayaga957@gmail.com, cyrilmagayaga@proton.me)
 --
 
 -- Define the M3L class
@@ -20,6 +20,7 @@ M3L.Function = {}
 
 -- Define class variables
 M3L.PI = 3.141592653589793
+M3L.TAU = 2 * M3L.PI
 M3L.E = 2.718281828459045
 
 -- Define static methods
@@ -89,6 +90,37 @@ end
 
 function M3L.cbrt(x)
     return x ^ (1/3)
+end
+
+function M3L.abs(x)
+    return x < 0 and -x or x
+end
+
+function M3L.gcd(a, b)
+    while b ~= 0 do
+        a, b = b, a % b
+    end
+    return M3L.abs(a)
+end
+
+function M3L.lcm(a, b)
+    if a == 0 or b == 0 then
+        return 0
+    end
+    return M3L.abs(a * b) // M3L.gcd(a, b)
+end
+
+function M3L.fma(a, b, c)
+    return a * b + c
+end
+
+function M3L.floor(x)
+    local i = x // 1  -- Truncate towards zero
+    if x < 0 and x ~= i then
+        return i - 1
+    else
+        return i
+    end
 end
 
 function M3L.Trim.sin(x)
